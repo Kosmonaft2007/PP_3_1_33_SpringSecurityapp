@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface UserService {
 
-    void add (User user);
+    void add(User user);
 
-    void update (User user);
+    void update(User user);
 
-    void delete (Long id);
+    void delete(Long id);
 
-    List<User> getAll ();
+    List<User> getAll();
 
-    User show (Long id);
+    User show(Long id);
 
-    User findByUsername (String name);
+    User findByUsername(String name);
 }

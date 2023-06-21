@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     //findByUsername - поиск User по его username
     @Query("Select u from User u left join fetch u.roles where u.name=:name")
-    User findByUsername (String name);
+    User findByUsername(String name);
 
     @Override
     Optional<User> findById(Long id);

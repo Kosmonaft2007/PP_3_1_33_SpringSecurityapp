@@ -14,13 +14,14 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
 
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users;
 
-    public Role () {}
+    public Role() {
+    }
 
 //    public Role(String name) {
 //        this.name = name;

@@ -36,22 +36,21 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                    .csrf().disable()
-                    .authorizeRequests()
-                    .antMatchers("/", "/index").permitAll()
-                    .antMatchers("/authenticated/**").authenticated()
-    //                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
-                    .antMatchers("/admin/**").hasRole("ADMIN")
-                    .anyRequest().authenticated()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "/index").permitAll()
+                .antMatchers("/authenticated/**").authenticated()
+                //                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin().successHandler(successUserHandler)
-                    .permitAll()
+                .formLogin().successHandler(successUserHandler)
+                .permitAll()
                 .and()
-                    .logout()
-    //                .logoutUrl("/logout")
-    //                .logoutSuccessUrl("/")
-                    .permitAll();
-
+                .logout()
+                //                .logoutUrl("/logout")
+                //                .logoutSuccessUrl("/")
+                .permitAll();
 
 
 //                .httpBasic().and()

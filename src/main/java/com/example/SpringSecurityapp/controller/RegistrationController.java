@@ -20,7 +20,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/user")
-    public String onlyForUser (Principal principal, ModelMap model) {
+    public String onlyForUser(Principal principal, ModelMap model) {
         User user = userServiceImpl.findByUsername(principal.getName());
         model.addAttribute("user", user);
         return "user";

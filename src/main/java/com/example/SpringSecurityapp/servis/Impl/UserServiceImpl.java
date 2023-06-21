@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     private UserRepository uR;
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserServiceImpl(UserRepository uR, @Lazy PasswordEncoder passwordEncoder) {
         this.uR = uR;
@@ -57,34 +58,34 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthority (Collection<Role> roles) {
-        return roles.stream().map(r ->new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+    private Collection<? extends GrantedAuthority> mapRolesToAuthority(Collection<Role> roles) {
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
     @Transactional
-    public void add (User user) {
+    public void add(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         uR.save(user);
     }
 
     @Transactional
-    public void update (User user) {
+    public void update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         uR.save(user);
     }
 
     @Transactional
-    public void delete (Long id) {
+    public void delete(Long id) {
         uR.delete(uR.findById(id).get());
     }
 
     @Transactional
-    public List<User> getAll () {
+    public List<User> getAll() {
         return uR.findAll();
     }
 
     @Transactional
-    public User show (Long id) {
+    public User show(Long id) {
         return uR.findById(id).get();
     }
 

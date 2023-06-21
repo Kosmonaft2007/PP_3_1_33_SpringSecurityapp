@@ -26,45 +26,47 @@ public class MainController {
     private RoleService roleService;
 
     @Autowired
-    public MainController (UserServiceImpl userService, RoleServiceImpl roleService) {
+    public MainController(UserServiceImpl userService, RoleServiceImpl roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
 
     @GetMapping(value = "/")
-    public String printUsers (ModelMap model) {
+    public String printUsers(ModelMap model) {
         List<User> listOfUsers = userService.getAll();
         model.addAttribute("listOfUsers", listOfUsers);
         return "Users";
     }
 
     @GetMapping("/addNewUser")
-    public String addNewUser (ModelMap model) {
+    public String addNewUser(ModelMap model) {
         User user = new User();
         Collection<Role> roles = roleService.getAllRoles();
         model.addAttribute("user", user);
         model.addAttribute("roles", roles);
         return "new-user-info";
     }
+
     @PostMapping("/")
-    public String saveUser (@ModelAttribute("user") User user) {
+    public String saveUser(@ModelAttribute("user") User user) {
         userService.add(user);
         return "redirect:/admin/";
     }
 
     @GetMapping("/{id}/edit")
-    public String editUser (ModelMap model, @PathVariable("id") Long id) {
+    public String editUser(ModelMap model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.show(id));
         return "/editUser";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute ("user") User user, @PathVariable("id") Long id) {
+    public String update(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
         userService.update(user);
         return "redirect:/admin/";
     }
+
     @DeleteMapping("/{id}")
-    public String  deleteUser(@PathVariable("id") Long id) {
+    public String deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/admin/";
     }
