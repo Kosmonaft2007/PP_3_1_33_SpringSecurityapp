@@ -32,9 +32,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
-
-
     //делавем обертку над UserRepository что бы напрямую к нему не обращаться
     public User findByUsername(String name) {
         return uR.findByUsername(name);
@@ -59,38 +56,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
-
-
-//    @Transactional
-//    public User findById(Long id) {
-//        Optional<User> per = uR.findById(id);
-////        return per.orElse(id);
-////        return per.orElse(null);
-////        return personRepositori.findById(id).orElse(null);
-//        return uR.findById(id).orElse(new User());
-//    }
-
-    @Override
-//    @Transactional (readOnly = true)
-    public List<User> findAll() {
-        return uR.findAll();
-    }
-
-    //-------------
-
-
-//    public User findByUsername (String name) {
-//        return uR.findByUsername(name);
-//    }
-
-//    @Override
-//    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-//        User user = findByUsername(name);
-//        if (user == null) {
-//            throw new UsernameNotFoundException(String.format("User `%s` not found", name));
-//        }
-//        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(),mapRolesToAuthority(user.getRoles()));
-//    }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthority (Collection<Role> roles) {
         return roles.stream().map(r ->new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());

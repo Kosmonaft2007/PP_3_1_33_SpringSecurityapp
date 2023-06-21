@@ -5,7 +5,7 @@ import com.example.SpringSecurityapp.models.User;
 import java.util.List;
 
 public interface UserService {
-    List<User> findAll();
+
     void add (User user);
 
     void update (User user);

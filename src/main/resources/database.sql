@@ -33,7 +33,7 @@ CREATE TABLE users_roles
 # Insert data
 
 INSERT INTO users
-VALUES (1, 'proselyte', '$2a$11$uSXS6rLJ91WjgOHhEGDx..VGs7MkKZV68Lv5r1uwFu7HgtRn3dcXG', 'demo', 1);
+VALUES (1, 'proselyte', '$2a$12$GWNj/lij3jXIqgstV6eq6e0vB/gLkk7fBjSVt8XcvwRw4cjCtaOOi', 'demo', 1);
 
 INSERT INTO roles
 VALUES (1, 'ROLE_USER');

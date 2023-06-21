@@ -1,8 +1,10 @@
 package com.example.SpringSecurityapp.models;
 
 import lombok.Data;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 
 import javax.persistence.*;
+import javax.sql.DataSource;
 import java.util.Collection;
 
 @Data
@@ -34,6 +36,7 @@ public class User {
     private Collection<Role> roles;
 
     public User() {}
+
 
 //    public User(String name, String lastName, Long age) {
 //        this.name = name;
