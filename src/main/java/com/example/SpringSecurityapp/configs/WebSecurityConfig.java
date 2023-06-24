@@ -20,8 +20,8 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity // включаем безопастность
 public class WebSecurityConfig {
-    private SuccessUserHandler successUserHandler;
-    private UserServiceImpl userServiceImpl;
+    private final SuccessUserHandler successUserHandler;
+    private final UserServiceImpl userServiceImpl;
 
     @Autowired
     public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImpl userServiceImpl) {
@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                 .antMatchers("/", "/index").permitAll()
                 .antMatchers("/authenticated/**").authenticated()
                 //                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)

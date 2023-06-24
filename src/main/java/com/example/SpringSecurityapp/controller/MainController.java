@@ -31,7 +31,7 @@ public class MainController {
         this.roleService = roleService;
     }
 
-    @GetMapping(value = "/")
+    @GetMapping
     public String printUsers(ModelMap model) {
         List<User> listOfUsers = userService.getAll();
         model.addAttribute("listOfUsers", listOfUsers);

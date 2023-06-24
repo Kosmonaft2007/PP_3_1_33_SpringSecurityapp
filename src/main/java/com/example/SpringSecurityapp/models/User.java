@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.sql.DataSource;
 import java.util.Collection;
 
+
 @Data
 @Entity
 @Table(name = "users")

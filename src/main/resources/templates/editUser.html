@@ -1,5 +1,8 @@
+
 <!DOCTYPE html>
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Update user</title>
@@ -34,7 +37,11 @@
         </select>
     </label>
     <br>
-    <input type="submit" value="Update"/>
+<!--    <form method="PATCH" th:action="@{/admin/{id}/edit(id=${user.getId()})}">-->
+<!--        <input type="submit" value="Update">-->
+<!--    </form>-->
+    <input type="submit" value="Update"
+           onclick = "window.location.href = '/admin'"/>
 </form>
 <br>
 <input align="right" type = "button" value = "logout"

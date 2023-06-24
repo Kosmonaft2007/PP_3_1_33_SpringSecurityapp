@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-    private UserRepository uR;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository uR;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository uR, @Lazy PasswordEncoder passwordEncoder) {
@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     //нам дают имя пользователя UserRepository, и по нем вернуть самого юзера из БД
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // дастоем из бады пользователя по пришедшему имени
         User user = uR.findByUsername(username); //если есть то получим если нет то null
@@ -52,8 +51,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
-    // нужно из коллекции ролей получаем коллекцию прав доступа
 
+    // нужно из коллекции ролей получаем коллекцию прав доступа
     public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
