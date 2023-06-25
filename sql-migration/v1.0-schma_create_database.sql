@@ -1,4 +1,6 @@
+
 -- Table: users
+DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
     id        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -10,6 +12,7 @@ CREATE TABLE users
     ENGINE = InnoDB;
 
 -- Table: roles
+DROP TABLE IF EXISTS roles;
 CREATE TABLE roles
 (
     id   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -18,17 +21,21 @@ CREATE TABLE roles
     ENGINE = InnoDB;
 
 # -- Table for mapping user and roles: user_roles
+DROP TABLE IF EXISTS users_roles;
 CREATE TABLE users_roles
 (
     user_id INT NOT NULL,
     role_id INT NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (role_id) REFERENCES roles (id),
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE,
 
     UNIQUE (user_id, role_id)
 )
     ENGINE = InnoDB;
+
+
+
 
 # Insert data
 
