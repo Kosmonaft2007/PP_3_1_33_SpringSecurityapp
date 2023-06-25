@@ -11,34 +11,34 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-@Component
-public class CustomAuthencationProvider implements AuthenticationProvider {
-    @Autowired
-    private UserRepository uR;
-
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String name = authentication.getName();
-        String password = authentication.getCredentials().toString();
-
-        User myUser = uR.findByUsername(name);
-        if (myUser == null) {
-            throw new BadCredentialsException("Unknown user " + name);
-        }
-        if (!password.equals(myUser.getPassword())) {
-            throw new BadCredentialsException("Bad password");
-        }
-        UserDetails principal = User.builder()
-                .username(myUser.getName())
-                .password(myUser.getPassword())
-                .roles(myUser.getLastName())
-                .build();
-        return new UsernamePasswordAuthenticationToken(principal, password, principal.getAuthorities());
-
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return authentication.equals(UsernamePasswordAuthenticationToken.class);
-    }
-}
+//@Component
+//public class CustomAuthencationProvider implements AuthenticationProvider {
+//    @Autowired
+//    private UserRepository uR;
+//
+//    @Override
+//    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+//        String name = authentication.getName();
+//        String password = authentication.getCredentials().toString();
+//
+//        User myUser = uR.findByUsername(name);
+//        if (myUser == null) {
+//            throw new BadCredentialsException("Unknown user " + name);
+//        }
+//        if (!password.equals(myUser.getPassword())) {
+//            throw new BadCredentialsException("Bad password");
+//        }
+//        UserDetails principal = User.builder()
+//                .username(myUser.getName())
+//                .password(myUser.getPassword())
+//                .roles(myUser.getLastName())
+//                .build();
+//        return new UsernamePasswordAuthenticationToken(principal, password, principal.getAuthorities());
+//
+//    }
+//
+//    @Override
+//    public boolean supports(Class<?> authentication) {
+//        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+//    }
+//}
