@@ -65,10 +65,10 @@ public class MainController {
         return "redirect:/admin/";
     }
 
-    @GetMapping  ("/delete/{id}")
+    @PostMapping  ("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
-        return "Users";
+        return "redirect:/admin/";
     }
 }
 

@@ -30,16 +30,17 @@ public class User {
     private Long age;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany( fetch = FetchType.LAZY)
+    @JoinTable(name = "users_roles", joinColumns = {
+            @JoinColumn(name = "user_id", nullable = false, updatable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "role_id", nullable = false, updatable = false)
+    })
     private Collection<Role> roles;
 
     public User() {
     }
 
-
+//
 //    public User(String name, String lastName, Long age) {
 //        this.name = name;
 //        this.lastName = lastName;
