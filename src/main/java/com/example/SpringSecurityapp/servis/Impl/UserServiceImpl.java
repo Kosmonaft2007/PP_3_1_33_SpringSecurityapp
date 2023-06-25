@@ -2,6 +2,8 @@ package com.example.SpringSecurityapp.servis.Impl;
 
 import com.example.SpringSecurityapp.models.Role;
 import com.example.SpringSecurityapp.models.User;
+
+
 import com.example.SpringSecurityapp.repository.UserRepository;
 import com.example.SpringSecurityapp.servis.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 // задача по имини пользователя предоставить User
@@ -37,12 +40,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public User findByUsername(String name) {
         return uR.findByUsername(name);
     }
+    public User findByName(String name) {
+        return uR.findByName(name);
+    }
 
     //нам дают имя пользователя UserRepository, и по нем вернуть самого юзера из БД
     @Override
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // дастоем из бады пользователя по пришедшему имени
-        User user = uR.findByUsername(username); //если есть то получим если нет то null
+        User user = findByUsername(username); //если есть то получим если нет то null
         // если не нашли то мы просим new UsernameNotFoundException (что то нет таких людей)
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
@@ -50,7 +57,18 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         //если нашли
         return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
-
+//    @Transactional
+//    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+//        // дастоем из бады пользователя по пришедшему имени
+//        User user = findByName(name); //если есть то получим если нет то null
+//        // если не нашли то мы просим new UsernameNotFoundException (что то нет таких людей)
+//        if (user == null) {
+//            throw new UsernameNotFoundException(String.format("User '%s' not found", name));
+//        }
+//        //если нашли
+////        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+//        return (UserDetails) user;
+//    }
 
     // нужно из коллекции ролей получаем коллекцию прав доступа
     public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
@@ -74,8 +92,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Transactional
+//    public void delete(Long id) {
+//        uR.delete(uR.findById(id).get());
+//    }
     public void delete(Long id) {
-        uR.delete(uR.findById(id).get());
+        uR.deleteById (id);
     }
 
     @Transactional

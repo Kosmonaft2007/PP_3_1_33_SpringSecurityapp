@@ -32,9 +32,21 @@
             <form method="PATCH" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
                 <input type="submit" value="Update">
             </form>
-            <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+            <form method="Post" th:action="@{delete/{id}(id=${user.id})}">
                 <input type="submit" value="Delete">
             </form>
+
+<!--            <form  method="DELETE"-->
+<!--                    th:href="@{delete/{id}(id=${user.id})}">-->
+<!--&lt;!&ndash;                     th:method="@" th:action="@{/admin/{id}(id=${user.getId()})}">&ndash;&gt;-->
+<!--                <input type="submit" value="Delete" onclick = "window.location.href = '/admin'" />-->
+<!--&lt;!&ndash;                       onclick = "window.location.href = '/admin'"&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <input type="submit" value="Delete">&ndash;&gt;-->
+
+<!--            </form>-->
+<!--            <a th:href="@{delete/{id}(id=${user.id})}">Delete</a>-->
+
         </td>
     </tr>
 
@@ -49,4 +61,3 @@
 <input align="right" type="button" value="logout"
        onclick="window.location.href = '/logout'"/>
 </body>
-</html>
