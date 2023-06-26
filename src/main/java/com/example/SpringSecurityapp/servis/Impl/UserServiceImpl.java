@@ -36,15 +36,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //делавем обертку над UserRepository что бы напрямую к нему не обращаться
     public User findByUsername(String name) {
         return uR.findByUsername(name);
     }
+
     public User findByName(String name) {
         return uR.findByName(name);
     }
 
-    //нам дают имя пользователя UserRepository, и по нем вернуть самого юзера из БД
     @Override
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -57,20 +56,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         //если нашли
         return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
-//    @Transactional
-//    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-//        // дастоем из бады пользователя по пришедшему имени
-//        User user = findByName(name); //если есть то получим если нет то null
-//        // если не нашли то мы просим new UsernameNotFoundException (что то нет таких людей)
-//        if (user == null) {
-//            throw new UsernameNotFoundException(String.format("User '%s' not found", name));
-//        }
-//        //если нашли
-////        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
-//        return (UserDetails) user;
-//    }
 
-    // нужно из коллекции ролей получаем коллекцию прав доступа
     public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
@@ -92,11 +78,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Transactional
-//    public void delete(Long id) {
-//        uR.delete(uR.findById(id).get());
-//    }
     public void delete(Long id) {
-        uR.deleteById (id);
+        uR.deleteById(id);
     }
 
     @Transactional

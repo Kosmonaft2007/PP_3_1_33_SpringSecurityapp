@@ -40,7 +40,6 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
                 .antMatchers("/authenticated/**").authenticated()
-                //                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -48,90 +47,19 @@ public class WebSecurityConfig {
                 .permitAll()
                 .and()
                 .logout()
-                //                .logoutUrl("/logout")
-                //                .logoutSuccessUrl("/")
                 .permitAll();
-
-
-//                .httpBasic().and()
-//                .csrf().disable()// защита от угрозы
-//                .authorizeHttpRequests()
-//                .antMatchers("/authenticated/**").authenticated() //сюда пускаем тока аутенфицированных, в остальные вход свободный
-//                .and()
-//                .formLogin().loginProcessingUrl("/login")// дизайн формы аутенфикации, можно добавить и свою. Аналог .httpBasic()
-//                .and()
-//                .logout().logoutSuccessUrl("/");
-
         return httpSecurity.build();
     }
 
-    // in-Memory храним в памяти
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user = // минимальная информация опользователя
-//                User.builder()
-//                        .username("u")
-//                        .password("1")
-//                        .roles("USER")
-//                        .build();
-//
-//        UserDetails admin =
-//                User.withDefaultPasswordEncoder()
-//                        .username("a")
-//                        .password("2")
-//                        .roles("ADMIN", "USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
-
-
-    // jdbcAuthenticated - храним базе, в какихто таблицах (плохо управлять)
-
-//    @Bean // если бину нужно доступ к БД то DataSource dataSource
-//    public JdbcUserDetailsManager users(DataSource dataSource) {
-//        // кладем в базу данных пользователей
-//        UserDetails user =
-//                User.builder()
-//                        .username("u")
-//                        .password("1")
-//                        .roles("USER")
-//                        .build();
-//
-//        UserDetails admin =
-//                User.builder()
-//                        .username("a")
-//                        .password("2")
-//                        .roles("ADMIN", "USER")
-//                        .build();
-//        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-//        // и положи через проверку, если сущность есть то его надо удалить : "не обязательно"
-////        if (users.userExists(user.getUsername())){
-////            users.deleteUser(user.getUsername());
-////        }
-////        if (users.userExists(admin.getUsername())){
-////            users.deleteUser(admin.getUsername());
-////        }
-//        users.createUser(user);
-//        users.createUser(admin);
-//        return users;
-//    }
-
-
-    // пользуемся нашими таблицами
-
-    // Преобразователь паролей, все пароли будут проходить через метод
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // мы передали в AuthenticationProvider логин пароль, а его задача сказать - существует такой пользователь или нет^ если да по толожить в SpringSecurityContest
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider aP = new DaoAuthenticationProvider();
         aP.setPasswordEncoder(passwordEncoder());
-        // узнает если такой пользователь или нет, отдельно составим запрос
         aP.setUserDetailsService(userServiceImpl);
         return aP;
     }
